@@ -1,6 +1,7 @@
-# RabbitMQ with CloudAMQP
+# RabbitMQ with CloudAMQP -- Broadcast Message
 
-Example code using RabbitMQ on [CloudAMQP](https://cloudamqp.com)
+* Example code using RabbitMQ on [CloudAMQP](https://cloudamqp.com)
+* Branch `broadcast`: Send message to all worker(s)
 
 ### File `.env` example
 
@@ -21,6 +22,8 @@ Python version 3.6
 
 #### Reference
 
-* (1) https://www.rabbitmq.com/tutorials/tutorial-one-python.html
-* (2) https://www.rabbitmq.com/tutorials/tutorial-two-python.html
-* (3) https://medium.com/learningsam/publish-to-rabbitmq-from-aws-lambda-cdb66f9f35c5
+(1) https://www.rabbitmq.com/tutorials/tutorial-one-python.html
+(2) https://www.rabbitmq.com/tutorials/tutorial-two-python.html
+(3) https://www.rabbitmq.com/tutorials/tutorial-three-python.html
+(4) https://www.rabbitmq.com/tutorials/tutorial-four-python.html
+(5) https://medium.com/learningsam/publish-to-rabbitmq-from-aws-lambda-cdb66f9f35c5
