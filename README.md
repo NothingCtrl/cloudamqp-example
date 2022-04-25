@@ -4,6 +4,8 @@
 * Branch `master`: Task queue (one worker or multi worker)
 * Branch `broadcast`: Send message to all worker(s)
 * Branch `direct`: Send message to all or specific worker using routing key
+* Branch `topic`: Send message to worker based on criteria
+* Branch `rpc`: Using RabbitMQ Remote procedure call (RPC)
 
 ### File `.env` example
 
