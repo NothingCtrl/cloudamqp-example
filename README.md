@@ -30,4 +30,6 @@ Python version 3.6
 * (2) https://www.rabbitmq.com/tutorials/tutorial-two-python.html
 * (3) https://www.rabbitmq.com/tutorials/tutorial-three-python.html
 * (4) https://www.rabbitmq.com/tutorials/tutorial-four-python.html
-* (5) https://medium.com/learningsam/publish-to-rabbitmq-from-aws-lambda-cdb66f9f35c5
+* (5) https://www.rabbitmq.com/tutorials/tutorial-five-python.html
+* (6) https://www.rabbitmq.com/tutorials/tutorial-six-python.html
+* (7) https://medium.com/learningsam/publish-to-rabbitmq-from-aws-lambda-cdb66f9f35c5
