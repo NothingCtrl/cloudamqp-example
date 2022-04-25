@@ -18,10 +18,15 @@ def main():
                                            virtual_host=RABBIT_USER)  # CloudAMQP sets the vhost same as User
     connection = pika.BlockingConnection(parameters)  # Establishes TCP Connection with RabbitMQ
     channel = connection.channel()
-    channel.exchange_declare(exchange='test', exchange_type='fanout')
+    channel.exchange_declare(exchange='test_direct', exchange_type='direct')
     result = channel.queue_declare(queue='', exclusive=True)
     queue_name = result.method.queue
-    channel.queue_bind(exchange='test', queue=queue_name)
+    routing_keys = sys.argv[1:]
+    if not routing_keys:
+        sys.stderr.write(f"Usage: {sys.argv[0]} key-name-1 key-name-2 ...\n")
+        sys.exit()
+    for key in routing_keys:
+        channel.queue_bind(exchange='test_direct', queue=queue_name, routing_key=key)
 
     def callback(ch, method, properties, body):
         print(" [x] Received %r" % body)
