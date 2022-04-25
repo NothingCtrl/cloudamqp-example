@@ -11,7 +11,6 @@ load_dotenv()
 RABBIT_HOST = os.environ['RABBIT_HOST']
 RABBIT_USER = os.environ['RABBIT_USER']
 RABBIT_PWD = os.environ['RABBIT_PWD']
-QUEUE_NAME = 'user'
 
 def main():
     credentials = pika.PlainCredentials(RABBIT_USER, RABBIT_PWD)
@@ -19,20 +18,24 @@ def main():
                                            virtual_host=RABBIT_USER)  # CloudAMQP sets the vhost same as User
     connection = pika.BlockingConnection(parameters)  # Establishes TCP Connection with RabbitMQ
     channel = connection.channel()
-    channel.queue_declare(queue=QUEUE_NAME, durable=True)
+    channel.exchange_declare(exchange='test_topic', exchange_type='topic')
+    result = channel.queue_declare('', exclusive=True)
+    queue_name = result.method.queue
+
+    binding_keys = sys.argv[1:]
+    if not binding_keys:
+        sys.stderr.write(f"Usage:{sys.argv[0]} [binding_key]...\n")
+        sys.exit(1)
+
+    for key in binding_keys:
+        channel.queue_bind(exchange='test_topic', queue=queue_name, routing_key=key)
 
     def callback(ch, method, properties, body):
-        print(" [x] Received %r" % body)
+        print(" [x] %r:%r" % (method.routing_key, body))
         print(f"     |--> Decode: {json.loads(body.decode('UTF-8'))}")
-        sleep = random.randint(5, 20)
-        print(f"     |--> Sleep {sleep}")
-        time.sleep(sleep)
-        # report message process is done, it not report back, after (default) 30 minutes server re-queue message
-        ch.basic_ack(delivery_tag=method.delivery_tag)  # not need this if case basic_consume set auto_ack=True
-        print(f"     |--> Ack reported")
 
     # channel.basic_consume(queue=QUEUE_NAME, auto_ack=True, on_message_callback=callback)    # single worker
-    channel.basic_consume(queue=QUEUE_NAME, on_message_callback=callback)     # multi worker
+    channel.basic_consume(queue=queue_name, on_message_callback=callback, auto_ack=True)     # multi worker
     print(' [*] Waiting for messages. To exit press CTRL+C')
     channel.start_consuming()
 
