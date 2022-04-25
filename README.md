@@ -1,6 +1,7 @@
 # RabbitMQ with CloudAMQP -- Direct Message
 
-Example code using RabbitMQ on [CloudAMQP](https://cloudamqp.com)
+* Example code using RabbitMQ on [CloudAMQP](https://cloudamqp.com)
+* Branch `direct`: Send message to all or specific worker using routing key
 
 ### File `.env` example
 
